@@ -1,6 +1,6 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { ToastProvider } from '@/shared/providers';
+import { QueryProvider, ToastProvider } from '@/shared/providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </ToastProvider>
       </body>
     </html>
   );

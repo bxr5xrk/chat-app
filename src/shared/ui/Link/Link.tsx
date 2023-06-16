@@ -9,5 +9,6 @@ interface LinkProps {
 
 export const Link = ({ path }: LinkProps) => {
   const router = useRouter();
+
   return <Button onClick={() => router.push(path)}>Log In</Button>;
 };
