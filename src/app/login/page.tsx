@@ -1,6 +1,6 @@
 'use client';
 
-import { LoginWithGoogle } from '@/features/auth';
+import { LoginWithGoogle } from '@/features/Auth';
 
 export default function Login() {
   return (

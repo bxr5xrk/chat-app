@@ -1,5 +1,5 @@
-import { LogOut } from '@/features/auth';
-import { authConfig } from '@/shared/lib';
+import { LogOut } from '@/features/Auth';
+import { authConfig } from '@/features/Auth/lib/authConfig';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 
