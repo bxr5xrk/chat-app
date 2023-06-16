@@ -1,10 +1,42 @@
 'use client';
 
 import { Button, Input } from '@/shared/ui';
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
+import { useAddFriend } from '../model/api/friendsService';
 
 export const AddFriend = () => {
   const emailRef = useRef<HTMLInputElement>(null);
+  const { mutate: onAdd, isSuccess, error } = useAddFriend();
+  const errorRef = useRef<HTMLParagraphElement>(null);
+  const successRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (errorRef.current && error) {
+      errorRef.current.classList.remove('hidden');
+
+      const timer = setTimeout(() => {
+        if (errorRef.current) {
+          errorRef.current.classList.add('hidden');
+        }
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (successRef.current && isSuccess) {
+      successRef.current.classList.remove('hidden');
+
+      const timer = setTimeout(() => {
+        if (successRef.current) {
+          successRef.current.classList.add('hidden');
+        }
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess]);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -12,7 +44,9 @@ export const AddFriend = () => {
     if (emailRef.current) {
       const email = emailRef.current.value;
 
-      console.log({ email });
+      onAdd({
+        email,
+      });
 
       emailRef.current.value = '';
     }
@@ -27,7 +61,7 @@ export const AddFriend = () => {
         Add friend by E-Mail
       </label>
 
-      <div className="mt-2 flex gap-4">
+      <div className="mt-2 flex gap-4 items-center">
         <Input
           required
           ref={emailRef}
@@ -37,10 +71,13 @@ export const AddFriend = () => {
 
         <Button type="submit">Add</Button>
       </div>
-      {/* <p className="mt-1 text-sm text-red-600">{errors.email?.message}</p> */}
-      {/* {showSuccessState ? (
-        <p className="mt-1 text-sm text-green-600">Friend request sent!</p>
-      ) : null} */}
+
+      <p ref={errorRef} className="hidden mt-1 text-sm text-red-600">
+        {error ? (error as { data: string }).data : null}
+      </p>
+      <p ref={successRef} className="hidden mt-1 text-sm text-green-600">
+        Friend request sent!
+      </p>
     </form>
   );
 };

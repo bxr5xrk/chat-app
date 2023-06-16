@@ -1,8 +1,8 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 
-export async function request<T>(options: Record<string, unknown>): Promise<T> {
+export async function request<T>(options: AxiosRequestConfig<T>): Promise<T> {
   const client = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL + '/',
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL + '/api/',
   });
 
   const onSuccess = (response: AxiosResponse<T>) => {
