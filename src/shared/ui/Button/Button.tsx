@@ -14,6 +14,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: Size;
   theme?: Theme;
   isLoading?: boolean;
+  className?: string;
 }
 
 export const Button = ({
@@ -21,6 +22,7 @@ export const Button = ({
   size = DEFAULT_SIZE,
   theme = DEFAULT_THEME,
   isLoading,
+  className,
   ...props
 }: ButtonProps) => {
   return (
@@ -28,7 +30,8 @@ export const Button = ({
       className={cl(
         SIZE_OPTIONS[size],
         THEME_OPTIONS[theme],
-        'active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none'
+        'active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
+        className
       )}
       {...props}
     >
