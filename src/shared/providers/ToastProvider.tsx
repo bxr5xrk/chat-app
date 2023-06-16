@@ -7,7 +7,7 @@ interface ToastProps {
   children: ReactNode;
 }
 
-export const Toast = ({ children }: ToastProps) => {
+export const ToastProvider = ({ children }: ToastProps) => {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
