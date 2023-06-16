@@ -1,2 +1,4 @@
 import { Button } from './Button/Button';
-export { Button };
+import { Spinner } from './Spinner';
+
+export { Button, Spinner };
