@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/shared/ui';
-import { useGoogleLogin } from '../model/api/loginByGoogle';
+import { useGoogleLogin } from '../model/api/loginService';
 
 export const LoginWithGoogle = () => {
   const { mutate: onLogin, isLoading } = useGoogleLogin();
