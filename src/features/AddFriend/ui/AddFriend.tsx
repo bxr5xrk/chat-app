@@ -1,42 +1,12 @@
 'use client';
 
-import { Button, Input } from '@/shared/ui';
-import { FormEvent, useEffect, useRef } from 'react';
+import { Button, Input, Paragraph } from '@/shared/ui';
+import { FormEvent, useRef } from 'react';
 import { useAddFriend } from '../model/api/friendsService';
 
 export const AddFriend = () => {
   const emailRef = useRef<HTMLInputElement>(null);
-  const { mutate: onAdd, isSuccess, error } = useAddFriend();
-  const errorRef = useRef<HTMLParagraphElement>(null);
-  const successRef = useRef<HTMLParagraphElement>(null);
-
-  useEffect(() => {
-    if (errorRef.current && error) {
-      errorRef.current.classList.remove('hidden');
-
-      const timer = setTimeout(() => {
-        if (errorRef.current) {
-          errorRef.current.classList.add('hidden');
-        }
-      }, 5000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [error]);
-
-  useEffect(() => {
-    if (successRef.current && isSuccess) {
-      successRef.current.classList.remove('hidden');
-
-      const timer = setTimeout(() => {
-        if (successRef.current) {
-          successRef.current.classList.add('hidden');
-        }
-      }, 5000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isSuccess]);
+  const { mutate: onAdd, isSuccess, error, isLoading } = useAddFriend();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,15 +39,16 @@ export const AddFriend = () => {
           placeholder="you@example.com"
         />
 
-        <Button type="submit">Add</Button>
+        <Button type="submit" isLoading={isLoading}>Add</Button>
       </div>
 
-      <p ref={errorRef} className="hidden mt-1 text-sm text-red-600">
+      <Paragraph theme="error" className="mt-1" monitor={!!error}>
         {error ? (error as { data: string }).data : null}
-      </p>
-      <p ref={successRef} className="hidden mt-1 text-sm text-green-600">
+      </Paragraph>
+
+      <Paragraph theme="success" className="mt-1" monitor={isSuccess}>
         Friend request sent!
-      </p>
+      </Paragraph>
     </form>
   );
 };
