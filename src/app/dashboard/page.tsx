@@ -1,15 +1,14 @@
 import { authConfig } from '@/shared/lib';
-import { Button } from '@/shared/ui';
+import { SignOut } from '@/shared/ui/Link/SignOut';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 
 export default async function Dashboard() {
   const session = await getServerSession(authConfig);
-  console.log({ session });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button>Dashboard</Button>
+      <SignOut />
       <div>
         <p>{session?.user.name}</p>
         <p>{session?.user.email}</p>
@@ -20,7 +19,7 @@ export default async function Dashboard() {
             height={100}
             priority
             src={session.user.image}
-            alt="rr"
+            alt="cover image"
           />
         ) : null}
       </div>
