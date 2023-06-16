@@ -1,10 +1,12 @@
 'use client';
 
-import { Button, Input } from '@/shared/ui';
+import { Button, Input, Paragraph } from '@/shared/ui';
 import { FormEvent, useRef } from 'react';
+import { useAddFriend } from '../model/api/friendsService';
 
 export const AddFriend = () => {
   const emailRef = useRef<HTMLInputElement>(null);
+  const { mutate: onAdd, isSuccess, error, isLoading } = useAddFriend();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -12,7 +14,9 @@ export const AddFriend = () => {
     if (emailRef.current) {
       const email = emailRef.current.value;
 
-      console.log({ email });
+      onAdd({
+        email,
+      });
 
       emailRef.current.value = '';
     }
@@ -27,7 +31,7 @@ export const AddFriend = () => {
         Add friend by E-Mail
       </label>
 
-      <div className="mt-2 flex gap-4">
+      <div className="mt-2 flex gap-4 items-center">
         <Input
           required
           ref={emailRef}
@@ -35,12 +39,16 @@ export const AddFriend = () => {
           placeholder="you@example.com"
         />
 
-        <Button type="submit">Add</Button>
+        <Button type="submit" isLoading={isLoading}>Add</Button>
       </div>
-      {/* <p className="mt-1 text-sm text-red-600">{errors.email?.message}</p> */}
-      {/* {showSuccessState ? (
-        <p className="mt-1 text-sm text-green-600">Friend request sent!</p>
-      ) : null} */}
+
+      <Paragraph theme="error" className="mt-1" monitor={!!error}>
+        {error ? (error as { data: string }).data : null}
+      </Paragraph>
+
+      <Paragraph theme="success" className="mt-1" monitor={isSuccess}>
+        Friend request sent!
+      </Paragraph>
     </form>
   );
 };
