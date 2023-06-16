@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, HTMLInputTypeAttribute, useId, useState } from 'react';
 import type { InputHTMLAttributes, Ref } from 'react';
 import { EyeIcon } from '@heroicons/react/24/outline';

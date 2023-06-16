@@ -8,6 +8,14 @@ export const AddFriend = () => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (emailRef.current) {
+      const email = emailRef.current.value;
+
+      console.log({ email });
+
+      emailRef.current.value = '';
+    }
   };
 
   return (
